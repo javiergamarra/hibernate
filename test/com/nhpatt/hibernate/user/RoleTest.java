@@ -9,23 +9,21 @@ import com.nhpatt.hibernate.utils.HibernateTest;
 
 public class RoleTest extends HibernateTest {
 
-	// public Role saveRole() {
-	// Session session = getSession();
-	// session.getTransaction().begin();
-	// Role role = new Role("Administrador");
-	// session.persist(role);
-	//
-	// session.getTransaction().commit();
-	// session.close();
-	// return role;
-	// }
-	//
-	//@Test
-	//public void persistARoleTest() {
-	//Role role = saveRole();
-	//assertNotNull(role);
-	//}
-	// 
+	public Role saveRole() {
+		Session session = getSession();
+		session.beginTransaction();
+		Role role = new Role("Administrador");
+		session.persist(role);
+		session.getTransaction().commit();
+		session.close();
+		return role;
+	}
+
+	@Test
+	public void persistARoleTest() {
+		Role role = saveRole();
+		assertNotNull(role);
+	}
 
 	@Test
 	public void aUserHasARoleTest() {
@@ -40,7 +38,7 @@ public class RoleTest extends HibernateTest {
 
 		session = getSession();
 		User user = (User) session.load(User.class, idUser);
-//		User user = (User) session.get(User.class, idUser);
+		// User user = (User) session.get(User.class, idUser);
 		user.getRole();
 		session.close();
 
