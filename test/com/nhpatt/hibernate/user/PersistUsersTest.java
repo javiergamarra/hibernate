@@ -10,23 +10,22 @@ import com.nhpatt.hibernate.utils.HibernateTest;
 
 public class PersistUsersTest extends HibernateTest {
 
-	// private User saveNewUser() {
-	// Session session = getSession();
-	// Transaction transaction = session.getTransaction();
-	// transaction.begin();
-	// User user = new User("Luis", "García");
-	// session.persist(user);
-	// transaction.commit();
-	// session.close();
-	// return user;
-	// }
-	//
-	// @Test
-	// public void saveUserWithGeneratedIdTest() {
-	// User user = saveNewUser();
-	// assertNotNull(user);
-	// assertNotNull(user.getId());
-	// }
+	private User saveNewUser() {
+		Session session = getSession();
+		session.beginTransaction();
+		User user = new User("Luis", "García");
+		session.persist(user);
+		session.getTransaction().commit();
+		session.close();
+		return user;
+	}
+
+	@Test
+	public void saveUserWithGeneratedIdTest() {
+		User user = saveNewUser();
+		assertNotNull(user);
+		assertNotNull(user.getId());
+	}
 	//
 	// @Test
 	// public void updateUserTest() {

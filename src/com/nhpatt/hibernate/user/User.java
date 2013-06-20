@@ -2,6 +2,8 @@ package com.nhpatt.hibernate.user;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
@@ -9,11 +11,22 @@ import javax.persistence.Transient;
 public class User {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
 	@Column(name = "userName")
 	private String name;
 	@Column(name = "surname", nullable = false)
 	private String surname;
+	
+	public User() {
+		super();
+	}
+
+	public User(String name, String surname) {
+		super();
+		this.name = name;
+		this.surname = surname;
+	}
 
 	public String getSurname() {
 		return surname;
