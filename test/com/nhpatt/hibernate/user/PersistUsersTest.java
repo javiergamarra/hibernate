@@ -47,24 +47,23 @@ public class PersistUsersTest extends HibernateTest {
 		assertNotNull(updatedUser);
 		assertNotNull(newCoolName, updatedUser);
 	}
-	//
-	// @Test
-	// public void deleteUserTest() {
-	// User user = saveNewUser();
-	//
-	// Session session = getSession();
-	// Transaction transaction = session.getTransaction();
-	// transaction.begin();
-	// User deleteUser = (User) session.get(User.class, user.getId());
-	// session.delete(deleteUser);
-	// transaction.commit();
-	// session.close();
-	//
-	// session = getSession();
-	// User deletedUser = (User) session.get(User.class, user.getId());
-	// session.close();
-	//
-	// assertNull(deletedUser);
-	// }
+
+	@Test
+	public void deleteUserTest() {
+		User user = saveNewUser();
+
+		Session session = getSession();
+		session.beginTransaction();
+		User deleteUser = (User) session.get(User.class, user.getId());
+		session.delete(deleteUser);
+		session.getTransaction().commit();
+		session.close();
+
+		session = getSession();
+		User deletedUser = (User) session.get(User.class, user.getId());
+		session.close();
+
+		assertNull(deletedUser);
+	}
 
 }
