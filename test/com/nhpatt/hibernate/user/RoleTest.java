@@ -45,24 +45,23 @@ public class RoleTest extends HibernateTest {
 		assertNotNull(user.getRole());
 	}
 
-	// @Test
-	// public void aUserPersistsHisRoleTest() {
-	// String roleName = "Usuario";
-	//
-	// Session session = getSession();
-	// session.getTransaction().begin();
-	// Role role = new Role(roleName);
-	// Integer idUser = (Integer) session
-	// .save(new User("Luis", "García", role));
-	// session.getTransaction().commit();
-	// session.close();
-	//
-	// assertNotNull(idUser);
-	//
-	// session = getSession();
-	// User user = (User) session.load(User.class, idUser);
-	// assertNotNull(user.getRole());
-	// assertEquals(roleName, user.getRole().getName());
-	//
-	// }
+	@Test
+	public void aUserPersistsHisRoleTest() {
+		String roleName = "Usuario";
+
+		Session session = getSession();
+		session.beginTransaction();
+		Role role = new Role(roleName);
+		Integer idUser = (Integer) session
+				.save(new User("Luis", "García", role));
+		session.getTransaction().commit();
+		session.close();
+
+		assertNotNull(idUser);
+
+		session = getSession();
+		User user = (User) session.load(User.class, idUser);
+		assertNotNull(user.getRole());
+		assertEquals(roleName, user.getRole().getName());
+	}
 }

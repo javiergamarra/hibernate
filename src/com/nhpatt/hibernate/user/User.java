@@ -1,5 +1,6 @@
 package com.nhpatt.hibernate.user;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +19,7 @@ public class User {
 	private String name;
 	@Column(name = "surname", nullable = false)
 	private String surname;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Role role;
 
 	public Role getRole() {
