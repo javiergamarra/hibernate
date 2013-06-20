@@ -30,15 +30,15 @@ public class RoleTest extends HibernateTest {
 		Role role = saveRole();
 
 		Session session = getSession();
-		session.getTransaction().begin();
+		session.beginTransaction();
 		Integer idUser = (Integer) session
 				.save(new User("Luis", "García", role));
 		session.getTransaction().commit();
 		session.close();
 
 		session = getSession();
-		User user = (User) session.load(User.class, idUser);
-		// User user = (User) session.get(User.class, idUser);
+		// User user = (User) session.load(User.class, idUser);
+		User user = (User) session.get(User.class, idUser);
 		user.getRole();
 		session.close();
 

@@ -16,7 +16,9 @@ public class Role implements Serializable {
 	private Integer id;
 	private String name;
 
-
+	public Role() {
+		super();
+	}
 
 	public Role(String name) {
 		super();
@@ -30,7 +32,7 @@ public class Role implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 @Entity
@@ -17,7 +18,17 @@ public class User {
 	private String name;
 	@Column(name = "surname", nullable = false)
 	private String surname;
-	
+	@ManyToOne
+	private Role role;
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 	public User() {
 		super();
 	}
@@ -26,6 +37,11 @@ public class User {
 		super();
 		this.name = name;
 		this.surname = surname;
+	}
+
+	public User(String name, String surname, Role role) {
+		this(name, surname);
+		this.role = role;
 	}
 
 	public String getSurname() {
