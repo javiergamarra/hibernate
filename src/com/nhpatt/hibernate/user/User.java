@@ -7,6 +7,9 @@ import javax.persistence.Id;
 public class User {
 
 	@Id
+	private Integer id;
+	private String name;
+
 	public Integer getId() {
 		return id;
 	}
@@ -14,9 +17,6 @@ public class User {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	private Integer id;
-	private String name;
 
 	public String getName() {
 		return name;
