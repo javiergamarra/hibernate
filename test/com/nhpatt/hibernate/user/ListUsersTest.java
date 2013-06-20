@@ -20,22 +20,22 @@ public class ListUsersTest extends HibernateTest {
 		assertNotNull(user.getName());
 	}
 
-	// @Test
-	// public void selectSurnameFromTableUserTest() {
-	// Session session = getSession();
-	// User user = (User) session.get(User.class, ID);
-	// session.close();
-	// assertNotNull(user);
-	// assertNotNull(user.getSurname());
-	// }
+	@Test
+	public void selectSurnameFromTableUserTest() {
+		Session session = getSession();
+		User user = (User) session.get(User.class, ID);
+		session.close();
+		assertNotNull(user);
+		assertNotNull(user.getSurname());
+	}
 
-	// @Test
-	// public void selectTransientTest() {
-	// Session session = getSession();
-	// User user = (User) session.get(User.class, ID);
-	// session.close();
-	// assertNotNull(user);
-	// assertNotNull(user.getName() + user.getSurname(), user.getFullName());
-	// }
+	@Test
+	public void selectTransientTest() {
+		Session session = getSession();
+		User user = (User) session.get(User.class, ID);
+		session.close();
+		assertNotNull(user);
+		assertNotNull(user.getName() + user.getSurname(), user.getFullName());
+	}
 
 }
