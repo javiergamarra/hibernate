@@ -1,11 +1,16 @@
 package com.nhpatt.hibernate.petition;
 
 import static junit.framework.Assert.assertNotNull;
+import static org.junit.Assert.assertFalse;
+
+import java.util.List;
+
 import junit.framework.Assert;
 
 import org.hibernate.Hibernate;
 import org.hibernate.LazyInitializationException;
 import org.hibernate.Session;
+import org.hibernate.type.IntegerType;
 import org.junit.Test;
 
 import com.nhpatt.hibernate.user.User;
@@ -50,7 +55,7 @@ public class PetitionTest extends HibernateTest {
 		session.close();
 		Assert.assertFalse(userFromBD.getPetitions().isEmpty());
 	}
-	
+
 	@Test
 	public void loadUserWithLazyPetitionsAndPreloadingTest() {
 		User user = saveUserWithAPetition();
@@ -60,6 +65,19 @@ public class PetitionTest extends HibernateTest {
 		Hibernate.initialize(userFromBD.getPetitions());
 		session.close();
 		Assert.assertFalse(userFromBD.getPetitions().isEmpty());
+	}
+
+	@Test
+	public void petitionsWithJoinColumnTest() {
+		//Hard to prove with what we know
+		User user = saveUserWithAPetition();
+
+		Session session = getSession();
+		List<Integer> userIds = session
+				.createSQLQuery("select userId from Petition")
+				.addScalar("userId", IntegerType.INSTANCE).list();
+		assertFalse(userIds.isEmpty());
+		session.close();
 	}
 
 	private User saveUserWithAPetition() {
