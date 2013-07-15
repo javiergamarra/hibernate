@@ -3,6 +3,8 @@ package com.nhpatt.hibernate.petition;
 import static junit.framework.Assert.assertNotNull;
 import junit.framework.Assert;
 
+import org.hibernate.Hibernate;
+import org.hibernate.LazyInitializationException;
 import org.hibernate.Session;
 import org.junit.Test;
 
@@ -39,7 +41,7 @@ public class PetitionTest extends HibernateTest {
 		session.close();
 	}
 
-	// @Test(expected = LazyInitializationException.class)
+	@Test(expected = LazyInitializationException.class)
 	public void loadUserWithLazyPetitionsTest() {
 		User user = saveUserWithAPetition();
 
@@ -48,24 +50,14 @@ public class PetitionTest extends HibernateTest {
 		session.close();
 		Assert.assertFalse(userFromBD.getPetitions().isEmpty());
 	}
-
+	
 	@Test
-	public void loadUserWithEagerPetitionsTest() {
+	public void loadUserWithLazyPetitionsAndPreloadingTest() {
 		User user = saveUserWithAPetition();
 
 		Session session = getSession();
 		User userFromBD = (User) session.get(User.class, user.getId());
-		session.close();
-		Assert.assertFalse(userFromBD.getPetitions().isEmpty());
-	}
-
-	@Test
-	public void loadUserWithLazyButJoinPetitionsTest() {
-		//Lazy Fetching in Join is, in fact, eager fetching
-		User user = saveUserWithAPetition();
-
-		Session session = getSession();
-		User userFromBD = (User) session.get(User.class, user.getId());
+		Hibernate.initialize(userFromBD.getPetitions());
 		session.close();
 		Assert.assertFalse(userFromBD.getPetitions().isEmpty());
 	}
