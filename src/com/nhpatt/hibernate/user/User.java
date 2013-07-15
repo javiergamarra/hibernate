@@ -14,6 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.nhpatt.hibernate.petition.Petition;
 
 @Entity
@@ -29,7 +32,8 @@ public class User {
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Role role;
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.LAZY)
+	@Fetch(FetchMode.JOIN)
 	private Set<Petition> petitions = new HashSet<Petition>();
 
 	public Set<Petition> getPetitions() {

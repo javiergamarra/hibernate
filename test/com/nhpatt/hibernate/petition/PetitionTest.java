@@ -59,6 +59,17 @@ public class PetitionTest extends HibernateTest {
 		Assert.assertFalse(userFromBD.getPetitions().isEmpty());
 	}
 
+	@Test
+	public void loadUserWithLazyButJoinPetitionsTest() {
+		//Lazy Fetching in Join is, in fact, eager fetching
+		User user = saveUserWithAPetition();
+
+		Session session = getSession();
+		User userFromBD = (User) session.get(User.class, user.getId());
+		session.close();
+		Assert.assertFalse(userFromBD.getPetitions().isEmpty());
+	}
+
 	private User saveUserWithAPetition() {
 		Session session = getSession();
 		session.beginTransaction();
