@@ -5,37 +5,41 @@ import static org.junit.Assert.assertNotNull;
 import org.hibernate.Session;
 import org.junit.Test;
 
-import com.nhpatt.hibernate.utils.HibernateTest;
-
-public class ListUsersTest extends HibernateTest {
-
-	private static final int ID = 1;
+public class ListUsersTest extends PersistUsersTest {
 
 	@Test
 	public void selectFirstObjectFromTableUserTest() {
+
+		User user = saveNewUser();
+
 		Session session = getSession();
-		User user = (User) session.get(User.class, ID);
+		User userFromBD = (User) session.get(User.class, user.getId());
 		session.close();
-		assertNotNull(user);
-		assertNotNull(user.getName());
+		assertNotNull(userFromBD);
+		assertNotNull(userFromBD.getName());
 	}
 
 	@Test
 	public void selectSurnameFromTableUserTest() {
+		User user = saveNewUser();
+
 		Session session = getSession();
-		User user = (User) session.get(User.class, ID);
+		User userFromBD = (User) session.get(User.class, user.getId());
 		session.close();
-		assertNotNull(user);
-		assertNotNull(user.getSurname());
+		assertNotNull(userFromBD);
+		assertNotNull(userFromBD.getSurname());
 	}
 
 	@Test
 	public void selectTransientTest() {
+		User user = saveNewUser();
+
 		Session session = getSession();
-		User user = (User) session.get(User.class, ID);
+		User userFromBD = (User) session.get(User.class, user.getId());
 		session.close();
-		assertNotNull(user);
-		assertNotNull(user.getName() + user.getSurname(), user.getFullName());
+		assertNotNull(userFromBD);
+		assertNotNull(userFromBD.getName() + userFromBD.getSurname(),
+				userFromBD.getFullName());
 	}
 
 }

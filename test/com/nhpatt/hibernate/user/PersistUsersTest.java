@@ -1,16 +1,16 @@
 package com.nhpatt.hibernate.user;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.junit.Test;
 
 import com.nhpatt.hibernate.utils.HibernateTest;
 
 public class PersistUsersTest extends HibernateTest {
 
-	private User saveNewUser() {
+	protected User saveNewUser() {
 		Session session = getSession();
 		session.beginTransaction();
 		User user = new User("Luis", "García");

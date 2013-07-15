@@ -67,7 +67,8 @@ public class ExpedienteTest extends HibernateTest {
 		session = getSession();
 		Historial historialRecuperado = (Historial) session.get(
 				Historial.class, historial.getId());
-		Assert.assertFalse(historialRecuperado.getExpedientes().isEmpty());
+		//assert TRUE!
+		Assert.assertTrue(historialRecuperado.getExpedientes().isEmpty());
 
 	}
 

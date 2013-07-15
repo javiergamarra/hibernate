@@ -1,5 +1,8 @@
 package com.nhpatt.hibernate.user;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,7 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+
+import com.nhpatt.hibernate.petition.Petition;
 
 @Entity
 public class User {
@@ -21,6 +27,17 @@ public class User {
 	private String surname;
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Role role;
+
+	@OneToMany
+	private Set<Petition> petitions = new HashSet<Petition>();
+
+	public Set<Petition> getPetitions() {
+		return petitions;
+	}
+
+	public void setPetitions(Set<Petition> petitions) {
+		this.petitions = petitions;
+	}
 
 	public Role getRole() {
 		return role;
