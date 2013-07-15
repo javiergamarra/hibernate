@@ -15,7 +15,7 @@ public class OwnerTest extends PetitionTest {
 	@Test
 	public void bidirectionalWithMappedByTest() {
 		User user = saveUserWithAPetition();
-		
+
 		Session session = getSession();
 		assertFalse(user.getPetitions().isEmpty());
 		for (Petition petition : user.getPetitions()) {
@@ -24,5 +24,16 @@ public class OwnerTest extends PetitionTest {
 		session.close();
 	}
 
-	
+	@Test
+	public void bidirectionalWithInsertableFalseTest() {
+		User user = saveUserWithAPetition();
+
+		Session session = getSession();
+		assertFalse(user.getPetitions().isEmpty());
+		for (Petition petition : user.getPetitions()) {
+			assertNotNull(petition.getUser());
+		}
+		session.close();
+	}
+
 }

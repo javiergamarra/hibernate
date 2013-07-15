@@ -20,7 +20,7 @@ public class Petition implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Integer id;
 	@ManyToOne
-	@JoinColumn(name = "userId")
+	@JoinColumn(name = "userId", insertable = false, updatable = false)
 	private User user;
 
 	public Integer getId() {
