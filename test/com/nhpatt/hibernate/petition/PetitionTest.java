@@ -80,13 +80,14 @@ public class PetitionTest extends HibernateTest {
 		session.close();
 	}
 
-	private User saveUserWithAPetition() {
+	protected User saveUserWithAPetition() {
 		Session session = getSession();
 		session.beginTransaction();
 
 		User user = new User("Javier", "Gamarra");
 		Petition petition = new Petition();
 		user.getPetitions().add(petition);
+		petition.setUser(user);
 
 		session.save(petition);
 		session.save(user);
