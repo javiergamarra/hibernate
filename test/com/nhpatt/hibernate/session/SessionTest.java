@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import org.hibernate.FlushMode;
+import org.hibernate.NonUniqueObjectException;
 import org.hibernate.Session;
 import org.junit.Test;
 
@@ -74,6 +75,18 @@ public class SessionTest extends HibernateTest {
 
 		Session session = getSession();
 		User userFromBD = (User) session.get(User.class, pepe.getId());
+		assertFalse(userFromBD == pepe);
+		session.close();
+
+	}
+
+	@Test(expected = NonUniqueObjectException.class)
+	public void aDifferentObjectWithTheSameIdentifierTest() {
+		User pepe = saveUser("Pepe", "Rayuela");
+		pepe.setName("Lola");
+		Session session = getSession();
+		User userFromBD = (User) session.get(User.class, pepe.getId());
+		session.update(pepe);
 		assertFalse(userFromBD == pepe);
 		session.close();
 
