@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.junit.Test;
 
@@ -35,7 +36,8 @@ public class QueriesTest extends PersistUsersTest {
 		session.beginTransaction();
 
 		List<User> users = session.createCriteria(User.class)
-				.add(Restrictions.eq("name", "Luis")).list();
+				.add(Restrictions.ilike("name", "luis", MatchMode.ANYWHERE))
+				.list();
 
 		session.getTransaction().commit();
 		session.close();
