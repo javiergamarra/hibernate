@@ -2,6 +2,7 @@ package com.nhpatt.hibernate.session;
 
 import static org.junit.Assert.assertEquals;
 
+import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.junit.Test;
 
@@ -43,6 +44,25 @@ public class SessionTest extends HibernateTest {
 		session = getSession();
 		User userFromBD = (User) session.get(User.class, user.getId());
 		assertEquals("Lola", userFromBD.getName());
+		session.close();
+
+	}
+
+	@Test
+	public void loadAndChangeValueWithoutFlushTest() {
+		User user = saveUser("Pepe", "Rayuela");
+
+		Session session = getSession();
+		session.beginTransaction();
+		session.setFlushMode(FlushMode.MANUAL);
+		User userToChange = (User) session.get(User.class, user.getId());
+		userToChange.setName("Lola");
+		session.getTransaction().commit();
+		session.close();
+
+		session = getSession();
+		User userFromBD = (User) session.get(User.class, user.getId());
+		assertEquals("Pepe", userFromBD.getName());
 		session.close();
 
 	}
