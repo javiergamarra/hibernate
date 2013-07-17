@@ -1,6 +1,7 @@
 package com.nhpatt.hibernate.session;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
@@ -63,6 +64,17 @@ public class SessionTest extends HibernateTest {
 		session = getSession();
 		User userFromBD = (User) session.get(User.class, user.getId());
 		assertEquals("Pepe", userFromBD.getName());
+		session.close();
+
+	}
+
+	@Test
+	public void identityIsNotGuaranteedOutsideSessionTest() {
+		User pepe = saveUser("Pepe", "Rayuela");
+
+		Session session = getSession();
+		User userFromBD = (User) session.get(User.class, pepe.getId());
+		assertFalse(userFromBD == pepe);
 		session.close();
 
 	}
