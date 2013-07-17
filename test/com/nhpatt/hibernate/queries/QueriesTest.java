@@ -93,4 +93,20 @@ public class QueriesTest extends PersistUsersTest {
 		assertTrue(!users.isEmpty());
 	}
 
+	@Test
+	public void sqlQueryTest() {
+		saveNewUser();
+
+		Session session = getSession();
+		session.beginTransaction();
+
+		List<Object[]> users = session.createSQLQuery("select * from User")
+				.list();
+
+		session.getTransaction().commit();
+		session.close();
+		assertTrue(!users.isEmpty());
+	}
+
+
 }
