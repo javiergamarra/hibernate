@@ -108,5 +108,19 @@ public class QueriesTest extends PersistUsersTest {
 		assertTrue(!users.isEmpty());
 	}
 
+	@Test
+	public void sqlQueryWithConversionTest() {
+		saveNewUser();
+
+		Session session = getSession();
+		session.beginTransaction();
+
+		List<User> users = session.createSQLQuery("select * from User")
+				.addEntity(User.class).list();
+
+		session.getTransaction().commit();
+		session.close();
+		assertTrue(!users.isEmpty());
+	}
 
 }
