@@ -100,7 +100,7 @@ public class SessionTest extends HibernateTest {
 
 		User user = new User("Pepe", "Rayuela");
 		session.save(user);
-
+		session.flush();
 		session.getTransaction().rollback();
 		session.close();
 
@@ -117,7 +117,6 @@ public class SessionTest extends HibernateTest {
 
 		User user = new User(name, surname);
 		session.save(user);
-
 		session.getTransaction().commit();
 		session.close();
 		return user;
