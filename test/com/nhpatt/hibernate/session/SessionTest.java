@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import org.hibernate.FlushMode;
 import org.hibernate.NonUniqueObjectException;
 import org.hibernate.Session;
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.nhpatt.hibernate.user.User;
@@ -88,6 +89,24 @@ public class SessionTest extends HibernateTest {
 		User userFromBD = (User) session.get(User.class, pepe.getId());
 		session.update(pepe);
 		assertFalse(userFromBD == pepe);
+		session.close();
+
+	}
+
+	public void flushAndRollbackTest() {
+		Session session = getSession();
+		session.setFlushMode(FlushMode.MANUAL);
+		session.beginTransaction();
+
+		User user = new User("Pepe", "Rayuela");
+		session.save(user);
+
+		session.getTransaction().rollback();
+		session.close();
+
+		session = getSession();
+		User userFromBD = (User) session.get(User.class, user.getId());
+		Assert.assertNull(userFromBD);
 		session.close();
 
 	}
