@@ -79,4 +79,18 @@ public class QueriesTest extends PersistUsersTest {
 		assertTrue(!users.isEmpty());
 	}
 
+	@Test
+	public void hqlQueryTest() {
+		saveNewUser();
+
+		Session session = getSession();
+		session.beginTransaction();
+
+		List<User> users = session.createQuery("from User").list();
+
+		session.getTransaction().commit();
+		session.close();
+		assertTrue(!users.isEmpty());
+	}
+
 }
