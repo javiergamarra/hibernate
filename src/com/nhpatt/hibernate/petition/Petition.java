@@ -1,13 +1,18 @@
 package com.nhpatt.hibernate.petition;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 import com.nhpatt.hibernate.user.User;
 
@@ -22,6 +27,10 @@ public class Petition implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "userId", insertable = false, updatable = false)
 	private User user;
+
+	@OrderColumn(name = "bankOrder")
+	@OneToMany(mappedBy = "petition", cascade = CascadeType.ALL)
+	private List<BankAccount> bankAccounts = new ArrayList<BankAccount>();
 
 	public Integer getId() {
 		return id;
@@ -40,6 +49,14 @@ public class Petition implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public List<BankAccount> getBankAccounts() {
+		return bankAccounts;
+	}
+
+	public void setBankAccounts(List<BankAccount> bankAccounts) {
+		this.bankAccounts = bankAccounts;
 	}
 
 }
