@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Example;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 import org.junit.Test;
@@ -60,6 +61,22 @@ public class QueriesTest extends PersistUsersTest {
 		session.getTransaction().commit();
 		session.close();
 		assertTrue(users.isEmpty());
+	}
+
+	@Test
+	public void queryByExampleTest() {
+		saveNewUser();
+
+		Session session = getSession();
+		session.beginTransaction();
+
+		Criteria criteria = session.createCriteria(User.class);
+		criteria.add(Example.create(new User("Luis", "García")));
+		List<User> users = criteria.list();
+
+		session.getTransaction().commit();
+		session.close();
+		assertTrue(!users.isEmpty());
 	}
 
 }
