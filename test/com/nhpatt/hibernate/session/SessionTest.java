@@ -93,6 +93,7 @@ public class SessionTest extends HibernateTest {
 
 	}
 
+	@Test
 	public void flushAndRollbackTest() {
 		Session session = getSession();
 		session.setFlushMode(FlushMode.MANUAL);
@@ -108,7 +109,6 @@ public class SessionTest extends HibernateTest {
 		User userFromBD = (User) session.get(User.class, user.getId());
 		Assert.assertNull(userFromBD);
 		session.close();
-
 	}
 
 	private User saveUser(String name, String surname) {
