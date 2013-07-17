@@ -110,6 +110,28 @@ public class SessionTest extends HibernateTest {
 		Assert.assertNull(userFromBD);
 		session.close();
 	}
+	
+	@Test
+	public void someFlushesAndRollbackTest() {
+		Session session = getSession();
+		session.setFlushMode(FlushMode.MANUAL);
+		session.beginTransaction();
+		
+		User user = new User("Pepe", "Rayuela");
+		session.save(user);
+		session.flush();
+		user.setName("Lola");
+		session.flush();
+		user.setName("Julia");
+		session.flush();
+		session.getTransaction().rollback();
+		session.close();
+		
+		session = getSession();
+		User userFromBD = (User) session.get(User.class, user.getId());
+		Assert.assertNull(userFromBD);
+		session.close();
+	}
 
 	private User saveUser(String name, String surname) {
 		Session session = getSession();
